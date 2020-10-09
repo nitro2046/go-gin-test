@@ -20,3 +20,19 @@ type User struct {
 	WeixinUnionid sql.NullString `gorm:"unique;" json:"-"`                    //微信unionid，唯一，json不返回
 	QqOpenid      sql.NullString `gorm:"unique;index;" json:"-"`              //QQopenid,唯一，加索引，json不返回
 }
+
+//根据手机号查找用户
+func FindUserByMobile(mobile string) (*User, error) {
+	var user User
+	err := db.Where("mobile = ?", mobile).First(&user).Error
+	return &user, err
+}
+
+//创建用户
+func CreateUser(mobile string) (*User, error) {
+	user := User{
+		Mobile: mobile,
+	}
+	err := db.Create(&user).Error
+	return &user, err
+}

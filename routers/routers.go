@@ -17,9 +17,13 @@ func InitRouter() *gin.Engine {
 	gin.SetMode(setting.ServerSetting.RunMode) //设置运行模式，debug或release,如果放在gin.New或者gin.Default之后，还是会打印一些信息的。放之前则不会
 
 	apiv1 := r.Group("/api/v1") //路由分组，apiv1代表v1版本的路由组
+
 	{
 		apiv1.GET("version", v1.GetAppVersionTest) //app版本升级
+		//登录/注册接口
 	}
+
+	apiv1.POST("auth", v1.AuthStore)
 
 	return r
 }
